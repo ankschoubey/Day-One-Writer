@@ -1,57 +1,83 @@
-# Day-One-Writer
-Python wrapper which internally uses [dayone-cli](http://help.dayoneapp.com/day-one-2-0/command-line-interface-cli). Compatible with [Day One 2](http://dayoneapp.com/) only.
+# dayonewriter
+Python wrapper which internally uses [dayone-cli](http://help.dayoneapp.com/day-one-2-0/command-line-interface-cli). Compatible with [Day One 2+](http://dayoneapp.com/)+.
+
+Make sure that it is installed [dayone-cli](http://help.dayoneapp.com/day-one-2-0/command-line-interface-cli) is installed.
+
+Day One 3 features like audio are not supported.
+
+## Installation
+
+```pip install dayonewriter```
 
 ## Usage
 
-Creating an Entry with text, photo and tag
+### Creating an Entry with text, photo and tag
 
 ```
-from dayone2 import Entry, DayOne
+from dayonewriter import Entry, dayonewriter, markdown, helper
 from datetime import datetime
 
-note = Entry()
-note.text = 'Hello World'
-note.photo = ['path to photo.png', 'photo2.png']
-note.tag = ['tags are awesome']
-note.date = datetime.now() # needs a datetime object
+entry = Entry()
+# Providing datetime is compulsary
+entry.date = datetime.now() 
 
-journal = DayOne()
-journal.push(note)
+#optionals
+entry.text = 'Hello' 
+entry.tags = ['Tag 1','Tag2']
+entry.photos = ['Photo1','Photo2'] # needs to be maximum 10. If more then checkout helper.list_subset
+entry.journal = 'Journal Name'
+
+entry_id = dayonewriter(entry) #sends to dayone using cli
 ```
-
-## Explaination
-
-2 classes
 
 ### ```Entry``` class
-for each new entry and has these attributes by default:
+each new entry and has these attributes by default:
 ```
-text = ''
-tags = [] #list
-date = None
-photos = [] #list
-journal = None
-starred = False
-
-## below attributes are not tested well
-coordinate = []
-timezone = None
+class Entry:
+    text: str = ''
+    tags: list = []
+    date: datetime = None
+    photos: list = []
+    journal: str = None
+    starred: bool = False
+    
+    # below attributes are not tested 
+    coordinate: list = []
+    timezone: list = None
 ```
 
 #### Note:
 - ```date``` attribute in ```None``` by default and needs a [datetime](https://docs.python.org/3/library/datetime.html) object.
 - you can use [{photo}] in entry text to position photo.
 
-### ```DayOne``` class
+### helper
 
-Actual Wrapper to Day One Cli
+Helper contains only 1 method **list_subset** to create groups of 10 from list. 
 
-```push``` method:
-- Takes ```Entry``` object as argument in push and writes it to Day One App.
+Helpful when photos are more than 10.
 
-Constructor for ```DayOne``` class also has an optional argument to specify ```default_journal``` name
+```
+numbers = [1,2,3,4,5,6,7,8,9,10,11,12,13] # works with any data type
+print('Without subset ', numbers)
+print('With subset' ,helper.list_subset(numbers))
+```
 
-***
+### markdown
+
+contains methods which make writing markdown text easier:
+- bold
+- bullet
+- bullet_list
+- number_list
+- italic
+- dayone_link
+- photo
+- header
+- checklist
+- online_image
+- online_link
+- quote
+
 #### Links:
 - [Day One App](http://dayoneapp.com/)
 - [Day One 2 CLI](http://help.dayoneapp.com/day-one-2-0/command-line-interface-cli)
