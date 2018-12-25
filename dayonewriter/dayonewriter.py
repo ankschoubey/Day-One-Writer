@@ -68,7 +68,7 @@ def _format_photos(photos):
 
     if len(photos) >= 10:
         raise Exception(
-            'Number of Photos is higher than 10 which is not accepted by dayone-cli', photos)
+            'Number of Photos is higher than 10 which is not accepted by dayone-cli use dayonewriter.helper.list_subset to subset to size of 10 before insertion', photos)
 
     for i in range(len(photos)):
         photos[i] = _format_system_address(photos[i])
@@ -80,7 +80,7 @@ def _create_markdown_link(title, uuid):
     return f'[{title}](dayone2://view?entryId={uuid})'
 
 
-def push_to_dayone(entry: Entry):
+def dayonewriter(entry: Entry):
     if entry.date == None:
         raise Exception('entry.date needs a datetime object. If you want it to be current date use datetime.now()')
 
