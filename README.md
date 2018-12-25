@@ -1,4 +1,4 @@
-# Day-One-Python-Wrapper
+# Day-One-Writer
 Python wrapper which internally uses [dayone-cli](http://help.dayoneapp.com/day-one-2-0/command-line-interface-cli). Compatible with [Day One 2](http://dayoneapp.com/) only.
 
 ## Usage
